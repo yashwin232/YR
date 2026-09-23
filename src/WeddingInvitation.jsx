@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const PHOTO_SRC = "/couple.jpg";
 const image_1 = "/1.jpg";
 const image_2 = "/2.jpg";
+const musicSrc = "/classical.mp3";
 const targetDate = new Date("2026-12-06T08:30:00+05:30").getTime();
 
 const translations = {
@@ -165,8 +166,36 @@ const pad = (n) => String(n).padStart(2, "0");
 
 export default function WeddingInvitation() {
   const [lang, setLang] = useState("en");
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
   const t = translations[lang];
   const { days, hours, mins, secs, done } = useCountdown(targetDate);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.volume = 0.35;
+    audio.loop = true;
+  }, []);
+
+  const toggleMusic = async () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (audio.paused) {
+      try {
+        await audio.play();
+        setIsPlaying(true);
+      } catch (error) {
+        console.error("Audio playback failed:", error);
+      }
+      return;
+    }
+
+    audio.pause();
+    setIsPlaying(false);
+  };
 
   const rsvpHref =
     "https://wa.me/919611344161?text=" + encodeURIComponent(t.rsvpMessage);
@@ -178,6 +207,7 @@ export default function WeddingInvitation() {
 
   return (
     <div style={{ ...styles.page, fontFamily: bodyFont }}>
+      <audio ref={audioRef} src={musicSrc} preload="auto" loop style={{ display: "none" }} />
       <style>{fontImport}</style>
 
       {/* Language toggle */}
@@ -374,6 +404,10 @@ export default function WeddingInvitation() {
         </div>
       </section>
 
+      <button type="button" onClick={toggleMusic} style={styles.musicBtn} aria-label={isPlaying ? "Pause music" : "Play music"}>
+        {isPlaying ? "Pause music" : "Play music"}
+      </button>
+
       <footer style={styles.footer}>
         <div style={styles.monogram}>Y &amp; R</div>
         <p style={styles.footerNote}>{t.footerNote}</p>
@@ -473,6 +507,22 @@ const styles = {
   venueCity: { marginTop: 6, fontSize: 18, color: colors.inkSoft },
   btnMaroon: { display: "inline-block", marginTop: 22, padding: "13px 30px", background: colors.maroon, color: colors.ivory, textDecoration: "none", fontSize: 16, border: `1px solid ${colors.maroon}` },
   btnWhatsapp: { display: "inline-block", marginTop: 22, padding: "13px 30px", background: colors.whatsapp, color: colors.ivory, textDecoration: "none", fontSize: 16, border: `1px solid ${colors.whatsapp}` },
+  musicBtn: {
+    position: "fixed",
+    right: 18,
+    bottom: 18,
+    zIndex: 10,
+    padding: "10px 16px",
+    border: `1px solid ${colors.maroon}`,
+    background: "rgba(122, 31, 43, 0.96)",
+    color: colors.ivory,
+    borderRadius: 999,
+    fontSize: 13,
+    letterSpacing: "0.04em",
+    textTransform: "uppercase",
+    cursor: "pointer",
+    boxShadow: "0 12px 28px rgba(43,33,24,0.18)",
+  },
   footer: { textAlign: "center", padding: "48px 0 56px" },
   monogram: { fontFamily: serifDisplay, fontSize: 22, letterSpacing: "0.15em", color: colors.gold },
   footerNote: { marginTop: 10, fontSize: 14, color: colors.inkSoft, fontStyle: "italic" },
