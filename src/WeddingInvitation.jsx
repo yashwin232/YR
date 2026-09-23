@@ -171,6 +171,21 @@ export default function WeddingInvitation() {
   const t = translations[lang];
   const { days, hours, mins, secs, done } = useCountdown(targetDate);
 
+  const startPlayback = async () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    try {
+      audio.volume = 0.35;
+      audio.loop = true;
+      await audio.play();
+      setIsPlaying(true);
+    } catch (error) {
+      console.error("Audio playback failed:", error);
+      setIsPlaying(false);
+    }
+  };
+
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -178,16 +193,20 @@ export default function WeddingInvitation() {
     audio.volume = 0.35;
     audio.loop = true;
 
-    const startPlayback = async () => {
-      try {
-        await audio.play();
-        setIsPlaying(true);
-      } catch (error) {
-        console.error("Auto-play audio failed:", error);
-      }
+    const unlockAudio = () => {
+      startPlayback();
     };
 
     startPlayback();
+    window.addEventListener("pointerdown", unlockAudio, { once: true });
+    window.addEventListener("touchstart", unlockAudio, { once: true });
+    window.addEventListener("keydown", unlockAudio, { once: true });
+
+    return () => {
+      window.removeEventListener("pointerdown", unlockAudio);
+      window.removeEventListener("touchstart", unlockAudio);
+      window.removeEventListener("keydown", unlockAudio);
+    };
   }, []);
 
   const toggleMusic = async () => {
@@ -195,12 +214,7 @@ export default function WeddingInvitation() {
     if (!audio) return;
 
     if (audio.paused) {
-      try {
-        await audio.play();
-        setIsPlaying(true);
-      } catch (error) {
-        console.error("Audio playback failed:", error);
-      }
+      await startPlayback();
       return;
     }
 
@@ -416,7 +430,17 @@ export default function WeddingInvitation() {
       </section>
 
       <button type="button" onClick={toggleMusic} style={styles.musicBtn} aria-label={isPlaying ? "Pause music" : "Play music"}>
-        {isPlaying ? "Pause music" : "Play music"}
+        {isPlaying ? (
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true">
+            <path d="M5 9v6h3l4 3V6L8 9H5Zm10.5 0v6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M17.5 8.5v7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+          </svg>
+        ) : (
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true">
+            <path d="M5 9v6h3l4 3V6L8 9H5Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
+            <path d="M15.5 8.5c1.2 1 1.9 2.3 1.9 3.5 0 1.2-.7 2.5-1.9 3.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+          </svg>
+        )}
       </button>
 
       <footer style={styles.footer}>
