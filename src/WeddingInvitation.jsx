@@ -9,6 +9,9 @@ const targetDate = new Date("2026-12-06T08:30:00+05:30").getTime();
 const translations = {
   en: {
     lang: "en",
+    groomName: "Yashwin",
+    brideName: "Rakshitha",
+    shareLabel: "Share",
     auspicious: "Auspicious Wedding",
     together: "Together with their families",
     tagline: "And so, our forever begins…",
@@ -64,6 +67,9 @@ const translations = {
   },
   kn: {
     lang: "kn",
+    groomName: "ಯಶ್ವಿನ್",
+    brideName: "ರಕ್ಷಿತಾ",
+    shareLabel: "ಹಂಚಿಕೊಳ್ಳಿ",
     auspicious: "ಶುಭ ವಿವಾಹ",
     together:
       "ತಮ್ಮ ಕುಟುಂಬಗಳೊಂದಿಗೆ ",
@@ -246,14 +252,14 @@ export default function WeddingInvitation() {
           <span style={styles.accentKn}>{t.auspicious}</span>
           <p style={styles.kicker}>{t.together}</p>
           <h1 style={styles.names}>
-            Yashwin<span style={styles.amp}>&amp;</span>Rakshitha
+            {t.groomName}<span style={styles.amp}>&amp;</span>{t.brideName}
           </h1>
           <p style={styles.tagline}>{t.tagline}</p>
           <p style={styles.dateLine}>{t.dateRequest}</p>
 
           <div style={styles.portraitWrap}>
             <div style={styles.portraitFrame}>
-              <img src={PHOTO_SRC} alt="Yashwin and Rakshitha" style={styles.portraitImg} />
+              <img src={PHOTO_SRC} alt={`${t.groomName} and ${t.brideName}`} style={styles.portraitImg} />
             </div>
           </div>
 
@@ -271,9 +277,9 @@ export default function WeddingInvitation() {
           </div>
           <div style={styles.coupleGrid}>
             <div style={styles.center}>
-              <div style={styles.avatarRing}><span style={styles.avatarLetter}>Y</span></div>
+              <div style={styles.avatarRing}><span style={styles.avatarLetter}>{t.groomName.charAt(0)}</span></div>
               <p style={styles.roleEn}>{t.groom}</p>
-              <h3 style={styles.coupleName}>Yashwin</h3>
+              <h3 style={styles.coupleName}>{t.groomName}</h3>
             </div>
             <div style={styles.center}>
               <svg viewBox="0 0 24 24" fill="none" width="34" height="34">
@@ -281,9 +287,9 @@ export default function WeddingInvitation() {
               </svg>
             </div>
             <div style={styles.center}>
-              <div style={styles.avatarRing}><span style={styles.avatarLetter}>R</span></div>
+              <div style={styles.avatarRing}><span style={styles.avatarLetter}>{t.brideName.charAt(0)}</span></div>
               <p style={styles.roleEn}>{t.bride}</p>
-              <h3 style={styles.coupleName}>Rakshitha</h3>
+              <h3 style={styles.coupleName}>{t.brideName}</h3>
             </div>
           </div>
         </div>
@@ -334,7 +340,7 @@ export default function WeddingInvitation() {
           </div>
           <div style={styles.inviteBlock}>
             <p style={styles.bodyText}>{t.inviteBody}</p>
-            <h3 style={styles.inviteNames}>Yashwin<span style={styles.amp}>&amp;</span>Rakshitha</h3>
+            <h3 style={styles.inviteNames}>{t.groomName}<span style={styles.amp}>&amp;</span>{t.brideName}</h3>
             <p style={styles.bodyText}>{t.inviteEnd}</p>
           </div>
         </div>
@@ -372,9 +378,9 @@ export default function WeddingInvitation() {
           <h2 style={styles.sectionTitle}>{t.gallery}</h2>
           <div style={styles.rule} />
           <div style={styles.galleryFrame}>
-            <img src={PHOTO_SRC} alt="Yashwin and Rakshitha" style={{ width: "100%" }} />
-            <img src={image_1} alt="Yashwin and Rakshitha" style={{ width: "100%" }} />
-            <img src={image_2} alt="Yashwin and Rakshitha" style={{ width: "100%" }} />
+            <img src={PHOTO_SRC} alt={`${t.groomName} and ${t.brideName}`} style={{ width: "100%" }} />
+            <img src={image_1} alt={`${t.groomName} and ${t.brideName}`} style={{ width: "100%" }} />
+            <img src={image_2} alt={`${t.groomName} and ${t.brideName}`} style={{ width: "100%" }} />
           </div>
           <p style={styles.galleryCaption}>{t.galleryCaption}</p>
         </div>
@@ -413,12 +419,12 @@ export default function WeddingInvitation() {
             EN
           </button>
           <button type="button" onClick={() => setLang("kn")} style={{ ...styles.langBtn, ...(lang === "kn" ? styles.langBtnActive : {}), ...styles.floatLangBtn }}>
-            KN
+            ಕನ್ನಡ
           </button>
         </div>
 
         <a href="https://wa.me/?text=Yashwin%20%26%20Rakshitha%20Wedding%20Invitation%20https://example.com" target="_blank" rel="noopener noreferrer" style={styles.shareBtn} aria-label="Share invitation">
-          Share
+          {t.shareLabel}
         </a>
 
         <button type="button" onClick={toggleMusic} style={styles.musicBtn} aria-label={isPlaying ? "Pause music" : "Play music"}>
