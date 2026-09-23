@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 
 const PHOTO_SRC = "/couple.jpg";
-const image_1 = "/2.jpg";
-const image_2 = "/1.jpg";
+const image_1 = "/1.jpg";
+const image_2 = "/2.jpg";
 const image_3 = "/3.jpg";
 const musicSrc = "/classical.mp3";
 const targetDate = new Date("2026-12-06T08:30:00+05:30").getTime();
@@ -388,9 +388,9 @@ export default function WeddingInvitation() {
           <h2 style={styles.sectionTitle}>{t.gallery}</h2>
           <div style={styles.rule} />
           <div style={styles.galleryFrame}>
+            <img src={image_3} alt={`${t.groomName} and ${t.brideName}`} style={{ width: "100%" }} />
             <img src={image_1} alt={`${t.groomName} and ${t.brideName}`} style={{ width: "100%" }} />
             <img src={image_2} alt={`${t.groomName} and ${t.brideName}`} style={{ width: "100%" }} />
-            <img src={image_3} alt={`${t.groomName} and ${t.brideName}`} style={{ width: "100%" }} />
           </div>
           <p style={styles.galleryCaption}>{t.galleryCaption}</p>
         </div>
