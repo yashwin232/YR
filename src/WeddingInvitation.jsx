@@ -235,28 +235,6 @@ export default function WeddingInvitation() {
       <audio ref={audioRef} src={musicSrc} preload="auto" loop style={{ display: "none" }} />
       <style>{fontImport}</style>
 
-      {/* Language toggle */}
-      <div style={styles.langBar}>
-        <button
-          onClick={() => setLang("en")}
-          style={{
-            ...styles.langBtn,
-            ...(lang === "en" ? styles.langBtnActive : {}),
-          }}
-        >
-          English
-        </button>
-        <button
-          onClick={() => setLang("kn")}
-          style={{
-            ...styles.langBtn,
-            ...(lang === "kn" ? styles.langBtnActive : {}),
-          }}
-        >
-          ಕನ್ನಡ
-        </button>
-      </div>
-
       {/* Hero */}
       <section style={styles.hero}>
         <div style={styles.wrap}>
@@ -429,19 +407,34 @@ export default function WeddingInvitation() {
         </div>
       </section>
 
-      <button type="button" onClick={toggleMusic} style={styles.musicBtn} aria-label={isPlaying ? "Pause music" : "Play music"}>
-        {isPlaying ? (
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true">
-            <path d="M5 9v6h3l4 3V6L8 9H5Zm10.5 0v6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M17.5 8.5v7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-          </svg>
-        ) : (
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true">
-            <path d="M5 9v6h3l4 3V6L8 9H5Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
-            <path d="M15.5 8.5c1.2 1 1.9 2.3 1.9 3.5 0 1.2-.7 2.5-1.9 3.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-          </svg>
-        )}
-      </button>
+      <div style={styles.floatingControls}>
+        <div style={styles.langStack}>
+          <button type="button" onClick={() => setLang("en")} style={{ ...styles.langBtn, ...(lang === "en" ? styles.langBtnActive : {}), ...styles.floatLangBtn }}>
+            EN
+          </button>
+          <button type="button" onClick={() => setLang("kn")} style={{ ...styles.langBtn, ...(lang === "kn" ? styles.langBtnActive : {}), ...styles.floatLangBtn }}>
+            KN
+          </button>
+        </div>
+
+        <a href="https://wa.me/?text=Yashwin%20%26%20Rakshitha%20Wedding%20Invitation%20https://example.com" target="_blank" rel="noopener noreferrer" style={styles.shareBtn} aria-label="Share invitation">
+          Share
+        </a>
+
+        <button type="button" onClick={toggleMusic} style={styles.musicBtn} aria-label={isPlaying ? "Pause music" : "Play music"}>
+          {isPlaying ? (
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true">
+              <path d="M5 9v6h3l4 3V6L8 9H5Zm10.5 0v6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M17.5 8.5v7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true">
+              <path d="M5 9v6h3l4 3V6L8 9H5Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
+              <path d="M15.5 8.5c1.2 1 1.9 2.3 1.9 3.5 0 1.2-.7 2.5-1.9 3.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+            </svg>
+          )}
+        </button>
+      </div>
 
       <footer style={styles.footer}>
         <div style={styles.monogram}>Y &amp; R</div>
@@ -542,22 +535,60 @@ const styles = {
   venueCity: { marginTop: 6, fontSize: 18, color: colors.inkSoft },
   btnMaroon: { display: "inline-block", marginTop: 22, padding: "13px 30px", background: colors.maroon, color: colors.ivory, textDecoration: "none", fontSize: 16, border: `1px solid ${colors.maroon}` },
   btnWhatsapp: { display: "inline-block", marginTop: 22, padding: "13px 30px", background: colors.whatsapp, color: colors.ivory, textDecoration: "none", fontSize: 16, border: `1px solid ${colors.whatsapp}` },
-  musicBtn: {
+  floatingControls: {
     position: "fixed",
     right: 14,
-    bottom: 14,
-    zIndex: 10,
-    padding: "7px 12px",
+    bottom: 16,
+    zIndex: 12,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 8,
+  },
+  langStack: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 6,
+  },
+  floatLangBtn: {
+    width: 42,
+    height: 30,
+    padding: "4px 8px",
+    borderRadius: 999,
+    fontSize: 9,
+    lineHeight: 1,
+    letterSpacing: "0.08em",
+    fontWeight: 600,
+  },
+  shareBtn: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 42,
+    height: 30,
     border: `1px solid ${colors.maroon}`,
     background: "rgba(122, 31, 43, 0.96)",
     color: colors.ivory,
     borderRadius: 999,
-    fontSize: 11,
-    letterSpacing: "0.04em",
+    fontSize: 8,
+    textDecoration: "none",
+    letterSpacing: "0.06em",
     textTransform: "uppercase",
+    boxShadow: "0 10px 22px rgba(43,33,24,0.18)",
+  },
+  musicBtn: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 42,
+    height: 30,
+    border: `1px solid ${colors.maroon}`,
+    background: "rgba(122, 31, 43, 0.96)",
+    color: colors.ivory,
+    borderRadius: 999,
     cursor: "pointer",
     boxShadow: "0 10px 22px rgba(43,33,24,0.18)",
-    lineHeight: 1.2,
+    padding: 0,
   },
   footer: { textAlign: "center", padding: "48px 0 56px" },
   monogram: { fontFamily: serifDisplay, fontSize: 22, letterSpacing: "0.15em", color: colors.gold },
