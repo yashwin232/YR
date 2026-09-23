@@ -238,7 +238,16 @@ export default function WeddingInvitation() {
 
   return (
     <div style={{ ...styles.page, fontFamily: bodyFont }}>
-      <audio ref={audioRef} src={musicSrc} preload="auto" loop style={{ display: "none" }} />
+      <audio
+        ref={audioRef}
+        src={musicSrc}
+        preload="auto"
+        autoPlay
+        loop
+        playsInline
+        onCanPlay={startPlayback}
+        style={{ display: "none" }}
+      />
       <style>{fontImport}</style>
 
       {/* Hero */}
