@@ -16,7 +16,7 @@ const translations = {
     together: "Together with their families",
     tagline: "And so, our forever begins…",
     dateRequest:
-      "request the pleasure of your company · 5–6 December 2026 · Hassan",
+      "Request the pleasure of your company ·    5–6 December 2026 · Hassan",
     inviteLine:
       "We would be honoured to have you join us as we begin this new chapter, with all the joy, laughter and blessings a wedding brings.",
     twoSouls: "Two souls",
