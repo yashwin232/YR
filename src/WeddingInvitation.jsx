@@ -177,6 +177,17 @@ export default function WeddingInvitation() {
 
     audio.volume = 0.35;
     audio.loop = true;
+
+    const startPlayback = async () => {
+      try {
+        await audio.play();
+        setIsPlaying(true);
+      } catch (error) {
+        console.error("Auto-play audio failed:", error);
+      }
+    };
+
+    startPlayback();
   }, []);
 
   const toggleMusic = async () => {
