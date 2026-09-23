@@ -388,7 +388,6 @@ export default function WeddingInvitation() {
           <h2 style={styles.sectionTitle}>{t.gallery}</h2>
           <div style={styles.rule} />
           <div style={styles.galleryFrame}>
-            <img src={PHOTO_SRC} alt={`${t.groomName} and ${t.brideName}`} style={{ width: "100%" }} />
             <img src={image_1} alt={`${t.groomName} and ${t.brideName}`} style={{ width: "100%" }} />
             <img src={image_2} alt={`${t.groomName} and ${t.brideName}`} style={{ width: "100%" }} />
             <img src={image_3} alt={`${t.groomName} and ${t.brideName}`} style={{ width: "100%" }} />
