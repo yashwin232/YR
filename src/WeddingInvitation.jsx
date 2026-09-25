@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const PHOTO_SRC = "/couple.jpg";
 const image_1 = "/1.jpg";
@@ -6,152 +6,6 @@ const image_2 = "/2.jpg";
 const image_3 = "/3.jpg";
 const musicSrc = "/classical.mp3";
 const targetDate = new Date("2026-12-06T08:30:00+05:30").getTime();
-
-const translations = {
-  en: {
-    lang: "en",
-    groomName: "Yashwin",
-    brideName: "Rakshitha",
-    shareLabel: "Share",
-    auspicious: "Auspicious Wedding",
-    together: "Together with their families",
-    tagline: "And so, our forever begins…",
-    dateRequest:
-      "Request the pleasure of your company ·    5–6 December 2026 · Hassan",
-    inviteLine:
-      "We would be honoured to have you join us as we begin this new chapter, with all the joy, laughter and blessings a wedding brings.",
-    twoSouls: "Two souls",
-    journey: "One beautiful journey",
-    groom: "Groom",
-    bride: "Bride",
-    untilWe: 'Until we say "I do"',
-    countdown: "Counting down to the Muhurtham",
-    days: "Days",
-    hours: "Hours",
-    minutes: "Minutes",
-    seconds: "Seconds",
-    muhurthamNote: "Muhurtham · 8:30–9:30 AM, 6 December 2026",
-    celebrationsDone: "The celebrations have begun!",
-    ourStory: "Our story",
-    storyTitle: "A quiet beginning, a lifelong promise",
-    storyBody:
-      "What started as quiet conversations slowly grew into something neither of us was looking for, yet couldn’t imagine being without. Somewhere between the small moments and the big ones, we found in each other a home. Now, surrounded by the people who have shaped our lives, we’re ready to promise each other forever.",
-    blessings: "Blessings",
-    invitationTitle: "With love, we invite you",
-    inviteBody:
-      "With the blessings of our parents and elders, we joyfully invite you and your family to celebrate the wedding ceremony of",
-    inviteEnd: "Your presence and blessings will make our special day even more memorable.",
-    celebrations: "The celebrations",
-    schedule: "Event schedule",
-    function1: "Function one",
-    reception: "Reception",
-    dec5: "5 December 2026",
-    satVenue: "Saturday · RV Kalyana Mantapa",
-    function2: "Function two",
-    muhurtham: "Muhurtham",
-    dec6: "6 December 2026",
-    sunVenue: "Sunday, 8:30–9:30 AM · RV Kalyana Mantapa",
-    cherish: "A moment we cherish",
-    gallery: "Gallery",
-    galleryCaption: "More moments to be added soon.",
-    whereToFind: "Where to find us",
-    venue: "RV Kalyana Mantapa",
-    city: "Hassan, Karnataka",
-    viewMap: "View on Google Maps",
-    kindlyConfirm: "Kindly confirm",
-    rsvp: "RSVP",
-    rsvpNote: "Let us know you’re coming — it means the world to us.",
-    rsvpBtn: "RSVP on WhatsApp",
-    rsvpMessage:
-      "Hi Yashwin & Rakshitha! We would love to join your wedding celebrations on 5-6 December 2026. Confirming our RSVP!",
-    footerNote: "With love and gratitude — we can’t wait to celebrate with you.",
-  },
-  kn: {
-    lang: "kn",
-    groomName: "ಯಶ್ವಿನ್",
-    brideName: "ರಕ್ಷಿತಾ",
-    shareLabel: "ಹಂಚಿಕೊಳ್ಳಿ",
-    auspicious: "ಶುಭ ವಿವಾಹ",
-    together:
-      "ತಮ್ಮ ಕುಟುಂಬಗಳೊಂದಿಗೆ ",
-    tagline:
-      "ಹೀಗೆ, ನಮ್ಮ ಶಾಶ್ವತ ಪಯಣ ಆರಂಭವಾಗುತ್ತದೆ...",
-    dateRequest:
-      "ನಿಮ್ಮ ಉಪಸ್ಥಿತಿಯನ್ನು ಕೋರುತ್ತೇವೆ · 5–6 ಡಿಸೆಂಬರ್ 2026 · ಹಾಸನ",
-    inviteLine:
-      "ವಿವಾಹವು ತರುವ ಎಲ್ಲ ಸಂತೋಷ, ನಗು ಮತ್ತು ಆಶೀರ್ವಾದಗಳೊಂದಿಗೆ ನಾವು ನಮ್ಮ ಜೀವನದ ಈ ಹೊಸ ಅಧ್ಯಾಯವನ್ನು ಆರಂಭಿಸುತ್ತಿರುವಾಗ, ನೀವು ನಮ್ಮೊಂದಿಗೆ ಸೇರಿಕೊಳ್ಳುವುದು ನಮಗೆ ಹೆಮ್ಮೆಯ ವಿಷಯವಾಗಿರುತ್ತದೆ.",
-    twoSouls: "ಎರಡು ಆತ್ಮಗಳು",
-    journey:
-      "ಒಂದು ಸುಂದರ ಪಯಣ",
-    groom: "ವರ",
-    bride: "ವಧು",
-    untilWe:
-      "ನಾವು 'ಒಪ್ಪಿಗೆ ನೀಡುವ'ವರೆಗೂ",
-    countdown:
-      "ಮುಹೂರ್ತದ ಕಡೆಗೆ ಲೆಕ್ಕಗಣಿಕೆ",
-    days: "ದಿನಗಳು",
-    hours: "ಗಂಟೆಗಳು",
-    minutes: "ನಿಮಿಷಗಳು",
-    seconds: "ಸೆಕೆಂಡುಗಳು",
-    muhurthamNote:
-      "ಮುಹೂರ್ತ · ಬೆಳಿಗ್ಗೆ 8:30–9:30, 6 ಡಿಸೆಂಬರ್ 2026",
-    celebrationsDone:
-      "ಉತ್ಸವಗಳು ಪ್ರಾರಂಭವಾಗಿವೆ!",
-    ourStory:
-      "ನಮ್ಮ ಕಥೆ",
-    storyTitle:
-      "ಶಾಂತವಾದ ಪ್ರಾರಂಭ, ಜೀವನಪರ್ಯಂತದ ವಾಗ್ದಾನ",
-    storyBody:
-      "ಶಾಂತ ಮಾತುಕತೆಗಳಿಂದ ಪ್ರಾರಂಭವಾದದು ನಿಧಾನವಾಗಿ ಐನ್ನೇನಕ್ಕೋ ಆಗಿ ಬೆಳೆಯಿತು. ಚಿಕ್ಕ ಮತ್ತು ದೊಡ್ಡ ಕ್ಷಣಗಳ ನಡುವೆ ನಾವು ಪರಸ್ಪರರಲ್ಲಿ ಅ್ಭಿ ಆಶ್ರಯ ಕಂಡುಕೊಂಡೆವು. ಇನ್ನು ನಮ್ಮ ಜೀವನ ರೂಪಿಸಿದ ಪ್ರಿಯಮಾನವರ ನಡುವೆ ನಾವು ಐವಗಿಗೆ ವಾಗ್ದಾನ ನೀಡಲು ಸಿದ್ಧರಾಗಿದ್ದೇವೆ.",
-    blessings: "ಆಶಿರ್ವಾದ",
-    invitationTitle:
-      "ಪ್ರೀತಿಯಿಂದ ನಿಮ್ಮನ್ನು ಆಹ್ವಾನಿಸುತ್ತೇವೆ",
-    inviteBody:
-      "ನಮ್ಮ ಹಿರಿಯರು ಹಾಗೂ ತಂದೆಗಳ ಆಶಿರ್ವಾದದೊಂದಿಗೆ ನಿಮ್ಮನ್ನು ಹಾಗೂ ನಿಮ್ಮ ಕುಟುಂಬವನ್ನು ಈ ವಿವಾಹ ಸಮಾರಂಭಕ್ಕೆ ಸಂತೋಷದಿಂದ ಆಹ್ವಾನಿಸುತ್ತೇವೆ",
-    inviteEnd:
-      "ನಿಮ್ಮ ಉಪಸ್ಥಿತಿ ಹಾಗೂ ಆಶಿರ್ವಾದಗಳು ನಮ್ಮ ವಿಶೇಷ ದಿನವನ್ನು ಇನ್ನೂ ಸ್ಸ್ಮರಣೀಯವಾಗಿಸುತ್ತವೆ.",
-    celebrations: "ಉತ್ಸವಗಳು",
-    schedule: "ಕಾರ್ಯಕ್ರಮ",
-    function1:
-      "ಮೊದಲನೆಯ ಕಾರ್ಯಕ್ರಮ",
-    reception:
-      "ರಿಸೆಪ್ಶನ್",
-    dec5: "5 ಡಿಸೆಂಬರ್ 2026",
-    satVenue:
-      "ಶನಿವಾರ · ಆರ್ವಿ ಕಲ್ಯಾಣ ಮಂಟಪ",
-    function2:
-      "ಎರಡನೇ ಕಾರ್ಯಕ್ರಮ",
-    muhurtham:
-      "ಮುಹೂರ್ತ",
-    dec6: "6 ಡಿಸೆಂಬರ್ 2026",
-    sunVenue:
-      "ಭಾನುವಾರ, ಬೆಳಿಗ್ಗೆ 8:30–9:30 · ಆರ್ವಿ ಕಲ್ಯಾಣ ಮಂಟಪ",
-    cherish:
-      "ನಾವು ಅನುಭವಿಸುವ ಕ್ಷಣ",
-    gallery:
-      "ಚಿತ್ರಗಳು",
-    galleryCaption:
-      "ಇನ್ನೂ ಅನೇಕ ಕ್ಷಣಗಳು ಶೀಘ್ರವಾಗಿ ಸೇರಿಸಲಾಗುತ್ತವೆ.",
-    whereToFind:
-      "ನಮ್ಮನ್ನು ಎಲ್ಲಿ ಕಾಣಬಹುದು",
-    venue:
-      "ಆರ್ವಿ ಕಲ್ಯಾಣ ಮಂಟಪ",
-    city: "ಹಾಸನ್, ಕರ್ನಾಟಕ",
-    viewMap:
-      "ಗೂಗಲ್ ಮ್ಯಾಪ್ಸ್ನಲ್ಲಿ ನೋಡಿ",
-    kindlyConfirm:
-      "ದಯವಿಟ್ಟು ದೃಢಪಡಿಸಿ",
-    rsvp: "ಉಪಸ್ಥಿತಿ ದೃಢಪಡಿಸಿ",
-    rsvpNote:
-      "ನೀವು ಬರುತ್ತಿರುವಿರಿ ಎಂದು ತಿಳಿಸಿ — ನಮಗೆ ತುಂಬಾ ಸಂತೋಷವಾಗುತ್ತೆ.",
-    rsvpBtn:
-      "ವಾಟ್ಸ್ಆ್ಯಪ್ನಲ್ಲಿ ಉಪಸ್ಥಿತಿ ದೃಢಪಡಿಸಿ",
-    rsvpMessage:
-      "ನಮಸ್ಕಾರ Yashwin & Rakshitha! 5-6 ಡಿಸೆಂಬರ್ 2026 ರಂದು ನಿಮ್ಮ ವಿವಾಹ ಉತ್ಸವದಲ್ಲಿ ಭಾಗವಹಿಸಲು ಇಚ್ಛಿಸುತ್ತೇವೆ. RSVP ದೃಢಪಡಿಸುತ್ತಿದ್ದೇವೆ!",
-    footerNote:
-      "ಪ್ರೀತಿ ಮತ್ತು ಕೃತಜ್ಞತೆಯಿಂದ — ನಿಮ್ಮೊಂದಿಗೆ ಸಂಭ್ರಮಿಸಲು ತುಂಬ ಆಸೆಯಾಗಿದ್ದೇವೆ.",
-  },
-};
 
 function useCountdown(target) {
   const [timeLeft, setTimeLeft] = useState(() => target - Date.now());
@@ -173,10 +27,29 @@ const pad = (n) => String(n).padStart(2, "0");
 
 export default function WeddingInvitation() {
   const [lang, setLang] = useState("en");
+  const [translations, setTranslations] = useState(null);
+  const [languageError, setLanguageError] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
-  const t = translations[lang];
   const { days, hours, mins, secs, done } = useCountdown(targetDate);
+
+  useEffect(() => {
+    fetch("/languages.json")
+      .then((response) => {
+        if (!response.ok) throw new Error("Unable to load languages");
+        return response.json();
+      })
+      .then((languageData) => {
+        setTranslations(languageData);
+        setLang((currentLang) => languageData[currentLang] ? currentLang : Object.keys(languageData)[0]);
+      })
+      .catch((error) => {
+        console.error("Language data loading failed:", error);
+        setLanguageError(true);
+      });
+  }, []);
+
+  const t = translations?.[lang];
 
   const startPlayback = async () => {
     const audio = audioRef.current;
@@ -216,6 +89,14 @@ export default function WeddingInvitation() {
     };
   }, []);
 
+  if (languageError) {
+    return <div style={styles.statusMessage}>Unable to load language data.</div>;
+  }
+
+  if (!t) {
+    return <div style={styles.statusMessage}>Loading invitation…</div>;
+  }
+
   const toggleMusic = async () => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -245,7 +126,6 @@ export default function WeddingInvitation() {
         preload="auto"
         autoPlay
         loop
-        playsInline
         onCanPlay={startPlayback}
         style={{ display: "none" }}
       />
@@ -425,12 +305,17 @@ export default function WeddingInvitation() {
 
       <div style={styles.floatingControls}>
         <div style={styles.langStack}>
-          <button type="button" onClick={() => setLang("en")} style={{ ...styles.langBtn, ...(lang === "en" ? styles.langBtnActive : {}), ...styles.floatLangBtn }}>
-            EN
-          </button>
-          <button type="button" onClick={() => setLang("kn")} style={{ ...styles.langBtn, ...(lang === "kn" ? styles.langBtnActive : {}), ...styles.floatLangBtn }}>
-            ಕನ್ನಡ
-          </button>
+          {Object.entries(translations).map(([languageCode, language]) => (
+            <button
+              key={languageCode}
+              type="button"
+              onClick={() => setLang(languageCode)}
+              style={{ ...styles.langBtn, ...(lang === languageCode ? styles.langBtnActive : {}), ...styles.floatLangBtn }}
+              aria-label={`Change language to ${language.label}`}
+            >
+              {language.label}
+            </button>
+          ))}
         </div>
 
         <a href="https://wa.me/?text=Yashwin%20%26%20Rakshitha%20Wedding%20Invitation%20https://example.com" target="_blank" rel="noopener noreferrer" style={styles.shareBtn} aria-label="Share invitation">
@@ -482,6 +367,7 @@ const colors = {
 
 const styles = {
   page: { background: colors.ivory, color: colors.ink, minHeight: "100vh" },
+  statusMessage: { minHeight: "100vh", display: "grid", placeItems: "center", background: colors.ivory, color: colors.inkSoft, fontFamily: serifBody, fontSize: 20 },
   wrap: { maxWidth: 920, margin: "0 auto", padding: "0 24px" },
   langBar: {
     position: "sticky",
