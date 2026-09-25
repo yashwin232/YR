@@ -87,7 +87,7 @@ export default function WeddingInvitation() {
       window.removeEventListener("touchstart", unlockAudio);
       window.removeEventListener("keydown", unlockAudio);
     };
-  }, []);
+  }, [translations]);
 
   if (languageError) {
     return <div style={styles.statusMessage}>Unable to load language data.</div>;
