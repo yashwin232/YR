@@ -430,7 +430,7 @@ const styles = {
     color: colors.ivory,
     borderColor: colors.maroon,
   },
-  section: { padding: "64px 0" },
+  section: { padding: "10px 0" },
   center: { textAlign: "center" },
   familyBlessingTitle: { color: colors.gold, fontSize: 13, fontWeight: 600, letterSpacing: "0.12em", margin: "0 0 8px" },
   familiesGrid: { display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 32, maxWidth: 720, margin: "32px auto 0", textAlign: "center" },
