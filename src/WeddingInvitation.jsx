@@ -30,6 +30,7 @@ export default function WeddingInvitation() {
   const [translations, setTranslations] = useState(null);
   const [languageError, setLanguageError] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [needsAudioGesture, setNeedsAudioGesture] = useState(false);
   const audioRef = useRef(null);
   const { days, hours, mins, secs, done } = useCountdown(targetDate);
 
@@ -60,9 +61,10 @@ export default function WeddingInvitation() {
       audio.loop = true;
       await audio.play();
       setIsPlaying(true);
+      setNeedsAudioGesture(false);
     } catch (error) {
-      console.error("Audio playback failed:", error);
       setIsPlaying(false);
+      setNeedsAudioGesture(true);
     }
   };
 
@@ -127,6 +129,7 @@ export default function WeddingInvitation() {
         autoPlay
         loop
         onCanPlay={startPlayback}
+        onLoadedData={startPlayback}
         style={{ display: "none" }}
       />
       <style>{fontImport}</style>
@@ -220,6 +223,27 @@ export default function WeddingInvitation() {
         </div>
       </section>
 
+      {/* Family blessings */}
+      <section style={styles.section}>
+        <div style={styles.wrap}>
+          <div style={styles.center}>
+            <p style={styles.familyBlessingTitle}>{t.familyBlessingTitle}</p>
+            <h2 style={styles.sectionTitle}>{t.familySectionTitle}</h2>
+            <div style={styles.rule} />
+          </div>
+          <div style={styles.familiesGrid}>
+            <div style={styles.familyItem}>
+              <p style={styles.familyLabel}>{t.groomFamilyLabel}</p>
+              <h3 style={styles.familyNames}>{t.groomFamilyNames}</h3>
+            </div>
+            <div style={styles.familyItem}>
+              <p style={styles.familyLabel}>{t.brideFamilyLabel}</p>
+              <h3 style={styles.familyNames}>{t.brideFamilyNames}</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Invitation */}
       <section style={styles.section}>
         <div style={styles.wrap}>
@@ -304,6 +328,16 @@ export default function WeddingInvitation() {
       </section>
 
       <div style={styles.floatingControls}>
+        {needsAudioGesture && (
+          <button
+            type="button"
+            onClick={startPlayback}
+            style={styles.audioPrompt}
+            aria-live="polite"
+          >
+            {t.audioTapHint}
+          </button>
+        )}
         <div style={styles.langStack}>
           {Object.entries(translations).map(([languageCode, language]) => (
             <button
@@ -398,6 +432,11 @@ const styles = {
   },
   section: { padding: "64px 0" },
   center: { textAlign: "center" },
+  familyBlessingTitle: { color: colors.gold, fontSize: 13, fontWeight: 600, letterSpacing: "0.12em", margin: "0 0 8px" },
+  familiesGrid: { display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 32, maxWidth: 720, margin: "32px auto 0", textAlign: "center" },
+  familyItem: { padding: "8px 12px" },
+  familyLabel: { color: colors.inkSoft, fontStyle: "italic", fontSize: 16, margin: "0 0 8px" },
+  familyNames: { color: colors.maroon, fontFamily: serifDisplay, fontWeight: 600, fontSize: 26, lineHeight: 1.35, margin: 0 },
   hero: { padding: "72px 0 56px", textAlign: "center" },
   accentKn: { display: "block", fontFamily: kannada, fontSize: 16, color: colors.gold, marginBottom: 8 },
   kicker: { fontStyle: "italic", color: colors.inkSoft, fontSize: 17, marginBottom: 6 },
@@ -446,6 +485,18 @@ const styles = {
     flexDirection: "column",
     alignItems: "center",
     gap: 8,
+  },
+  audioPrompt: {
+    maxWidth: 180,
+    padding: "8px 12px",
+    border: `1px solid ${colors.gold}`,
+    borderRadius: 3,
+    background: colors.ivory,
+    color: colors.maroon,
+    fontFamily: kannada,
+    fontSize: 13,
+    boxShadow: "0 8px 20px rgba(43,33,24,0.16)",
+    cursor: "pointer",
   },
   langStack: {
     display: "flex",
